@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ui_major/data.dart' as globals;
-import 'package:ui_major/designData.dart' as designData;
+import 'package:UI_scanAndVerifyApp/data.dart' as globals;
+import 'package:UI_scanAndVerifyApp/designData.dart' as designData;
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'dart:io';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';

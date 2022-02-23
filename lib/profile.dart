@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ui_major/addAtrributes.dart';
-import 'package:ui_major/pendingAttributes.dart';
-import 'package:ui_major/approvedAttributes.dart';
-import 'package:ui_major/data.dart' as globals;
-import 'package:ui_major/designData.dart' as designData;
+import 'package:UI_scanAndVerifyApp/addAtrributes.dart';
+import 'package:UI_scanAndVerifyApp/pendingAttributes.dart';
+import 'package:UI_scanAndVerifyApp/approvedAttributes.dart';
+import 'package:UI_scanAndVerifyApp/data.dart' as globals;
+import 'package:UI_scanAndVerifyApp/designData.dart' as designData;
 
 
 class ProfileScreen extends StatelessWidget {

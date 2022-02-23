@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ui_major">
+    package="com.example.UI_scanAndVerifyApp">
    <application
-        android:label="ui_major"
+        android:label="UI_scanAndVerifyApp"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

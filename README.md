@@ -1,4 +1,4 @@
-# ui_major
+# UI_scanAndVerifyApp
 
 A new Flutter project.
 

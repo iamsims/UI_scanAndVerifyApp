@@ -4,7 +4,7 @@
 //list of attributes
 
 
-import 'package:ui_major/profile.dart';
+import 'package:UI_scanAndVerifyApp/profile.dart';
 
 var remainingAttributes = [ "DOB", "Location", "SLC Percentage", "Mother's Name", "Gender"];
 //TODO: when rejected add to the remaining attributes

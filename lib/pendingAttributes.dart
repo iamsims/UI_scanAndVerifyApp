@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ui_major/data.dart' as globals;
-import 'package:ui_major/designData.dart' as designData;
+import 'package:UI_scanAndVerifyApp/data.dart' as globals;
+import 'package:UI_scanAndVerifyApp/designData.dart' as designData;
 
 class PendingAttributesScreen extends StatelessWidget {
   const PendingAttributesScreen({Key? key}) : super(key: key);

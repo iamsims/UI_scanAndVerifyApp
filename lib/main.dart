@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ui_major/profile.dart';
-import 'package:ui_major/addAtrributes.dart';
-import 'package:ui_major/approvedAttributes.dart';
-import 'package:ui_major/verify.dart';
-import 'package:ui_major/Register.dart';
-import 'package:ui_major/data.dart' as globals;
+import 'package:UI_scanAndVerifyApp/profile.dart';
+import 'package:UI_scanAndVerifyApp/addAtrributes.dart';
+import 'package:UI_scanAndVerifyApp/approvedAttributes.dart';
+import 'package:UI_scanAndVerifyApp/verify.dart';
+import 'package:UI_scanAndVerifyApp/Register.dart';
+import 'package:UI_scanAndVerifyApp/data.dart' as globals;
 
 //TODO: safe area add
 

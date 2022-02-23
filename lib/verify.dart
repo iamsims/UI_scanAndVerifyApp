@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:ui_major/pendingAttributes.dart';
-import 'package:ui_major/data.dart' as globals;
-import 'package:ui_major/designData.dart' as designData;
+import 'package:UI_scanAndVerifyApp/pendingAttributes.dart';
+import 'package:UI_scanAndVerifyApp/data.dart' as globals;
+import 'package:UI_scanAndVerifyApp/designData.dart' as designData;
 
 //TODO: add validation in the fields copy from https://pub.dev/packages/flutter_form_builder
 

@@ -1,4 +1,4 @@
-package com.example.ui_major
+package com.example.UI_scanAndVerifyApp
 
 import io.flutter.embedding.android.FlutterActivity
 
