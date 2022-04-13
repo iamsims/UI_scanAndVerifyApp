@@ -7,8 +7,6 @@ import 'package:UI_scanAndVerifyApp/designData.dart' as designData;
 //TODO: add validation in the fields copy from https://pub.dev/packages/flutter_form_builder
 
 
-
-
 class VerifyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

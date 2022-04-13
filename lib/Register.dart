@@ -63,20 +63,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ],
             ),
             const SizedBox(height: 30.0),
-            Padding(
-              padding:
-              const EdgeInsets.symmetric(horizontal: 32, vertical: 8.0),
-              child: FormBuilderTextField(
-                name: "Name",
-                decoration: InputDecoration(
-                  labelText: "Name",
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Choose an option';
-                  }
-                  return null;
-                },
+            SingleChildScrollView(
+              child: Padding(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 8.0),
+                child: FormBuilderTextField(
+                  name: "Name",
+                  decoration: InputDecoration(
+                    labelText: "Name",
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Choose an option';
+                    }
+                    return null;
+                  },
+                    )
               ),
             ),
 

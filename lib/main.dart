@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:UI_scanAndVerifyApp/profile.dart';
-import 'package:UI_scanAndVerifyApp/addAtrributes.dart';
-import 'package:UI_scanAndVerifyApp/approvedAttributes.dart';
 import 'package:UI_scanAndVerifyApp/verify.dart';
 import 'package:UI_scanAndVerifyApp/Register.dart';
 import 'package:UI_scanAndVerifyApp/data.dart' as globals;
+import 'package:UI_scanAndVerifyApp/scanScreen.dart';
 
 //TODO: safe area add
 
@@ -41,6 +40,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _widgetOptions = <Widget>[
     ProfileScreen(),
     VerifyScreen(),
+    ScanScreen(),
   ];
 
   void performUserRegistered(){
@@ -75,6 +75,10 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.details),
             label: 'Verify',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.qr_code),
+            label: 'Scan',
+          ),
 
         ],
         currentIndex: _selectedIndex,
@@ -84,4 +88,3 @@ class _HomeState extends State<Home> {
     ): RegisterScreen(performUserRegistered);
   }
 }
-
