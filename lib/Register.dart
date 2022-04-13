@@ -7,7 +7,9 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'dart:io';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:image/image.dart' as img;
+import 'package:UI_scanAndVerifyApp/models/contractLinking.dart';
 
+import 'package:provider/provider.dart';
 
 
 // TODO: image halne from hyai ko files
@@ -123,15 +125,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       pendingRegistration = true;
                     }
                     );
-
-                    //approved ki nai bhanera esma check garne
-                    //send the image and the name
-                    await Future.delayed(Duration(seconds: 5));
-                    //if approved
-
                     globals.userInfo["Name"]= data!["Name"];
                     var bytes = await data["Profile Photo"][0].readAsBytes();
                     globals.image = MemoryImage(bytes);
+
+                    //approved ki nai bhanera esma check garne
+                    //send the image and the name
+                    Provider.of<ContractLinking>(context, listen:false).deploy(data);
+                    await Future.delayed(Duration(seconds: 5));
+                    //if approved
+
+                    
                    // print();
 
                     // print(globals.userInfo["Name"]);

@@ -5,7 +5,8 @@ import 'package:UI_scanAndVerifyApp/pendingAttributes.dart';
 import 'package:UI_scanAndVerifyApp/approvedAttributes.dart';
 import 'package:UI_scanAndVerifyApp/data.dart' as globals;
 import 'package:UI_scanAndVerifyApp/designData.dart' as designData;
-
+import 'package:UI_scanAndVerifyApp/models/contractLinking.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -151,9 +152,12 @@ class Attributes extends StatelessWidget {
 
 class UserInfo extends StatelessWidget {
   var userInfo = globals.userInfo;
-
+  
   @override
   Widget build(BuildContext context) {
+    var cred = Provider.of<ContractLinking>(context).getBalance();
+    print(cred);
+    print("here");
     List<Widget> _tiles = [];
     userInfo.forEach((key, value) =>
     {
@@ -167,6 +171,16 @@ class UserInfo extends StatelessWidget {
           )
       )
     });
+
+    // _tiles.add(
+    //   ListTile(
+    //         contentPadding: EdgeInsets.symmetric(
+    //             horizontal: 12, vertical: 4),
+    //         leading: Icon(designData.infoIcon["Name"]),
+    //         title: Text(cred),
+            
+    //       )
+    // );
 
     return Container(
       padding: const EdgeInsets.all(10),

@@ -1,3 +1,4 @@
+// import 'package:UI_scanAndVerifyApp/walletSetup.dart';
 import 'package:flutter/material.dart';
 import 'package:UI_scanAndVerifyApp/profile.dart';
 import 'package:UI_scanAndVerifyApp/addAtrributes.dart';
@@ -5,7 +6,10 @@ import 'package:UI_scanAndVerifyApp/approvedAttributes.dart';
 import 'package:UI_scanAndVerifyApp/verify.dart';
 import 'package:UI_scanAndVerifyApp/Register.dart';
 import 'package:UI_scanAndVerifyApp/data.dart' as globals;
-
+import 'package:UI_scanAndVerifyApp/walletGen.dart';
+import 'package:provider/provider.dart';
+import 'package:UI_scanAndVerifyApp/models/contractLinking.dart';
+import 'package:UI_scanAndVerifyApp/home.dart';
 //TODO: safe area add
 
 void main() {
@@ -19,9 +23,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: Home(),
+    return MultiProvider(
+      providers:[
+        ChangeNotifierProvider.value(
+          value:ContractLinking(),
+        ),
+      ],
+    
+      child: MaterialApp(
+        routes: {
+          '/': (context) => Home(),
+          '/home': (context) => SHome(),
+          '/newWallet': (context) => NewWallet(storage: WalletStorage()),
+        },
+      ),
     );
   }
 }
@@ -37,13 +52,13 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   bool userRegistered = globals.userRegistered;
   static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> _widgetOptions = <Widget>[
     ProfileScreen(),
     VerifyScreen(),
   ];
 
-  void performUserRegistered(){
+  void performUserRegistered() {
     setState(() {
       userRegistered = true;
       globals.userRegistered = true;
@@ -58,30 +73,67 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return userRegistered?Scaffold(
-      appBar: AppBar(
-        title: const Text('App Name'),
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.perm_identity),
-            label: 'Profile',
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Vaccination'),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        child: Text('VaccinationStatus'),
+                        onPressed: () => {
+                          Navigator.pushNamed(context, '/vaccinationStatus')
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        child: Text('Registration'),
+                        onPressed: () =>
+                            {Navigator.pushNamed(context, '/registration')},
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        child: Text('Stats'),
+                        onPressed: () =>
+                            {Navigator.pushNamed(context, '/stats')},
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        child: Text('Wallet Setup'),
+                        onPressed: () =>
+                            {Navigator.pushNamed(context, '/newWallet')},
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.details),
-            label: 'Verify',
-          ),
-
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        ),
       ),
-    ): RegisterScreen(performUserRegistered);
+    );
   }
 }
-
