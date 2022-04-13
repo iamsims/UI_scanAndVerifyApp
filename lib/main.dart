@@ -1,4 +1,6 @@
 // import 'package:UI_scanAndVerifyApp/walletSetup.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:UI_scanAndVerifyApp/profile.dart';
 import 'package:UI_scanAndVerifyApp/addAtrributes.dart';
@@ -10,6 +12,7 @@ import 'package:UI_scanAndVerifyApp/walletGen.dart';
 import 'package:provider/provider.dart';
 import 'package:UI_scanAndVerifyApp/models/contractLinking.dart';
 import 'package:UI_scanAndVerifyApp/home.dart';
+import 'package:http/http.dart' as http;
 //TODO: safe area add
 
 void main() {
@@ -58,6 +61,27 @@ class _HomeState extends State<Home> {
     VerifyScreen(),
   ];
 
+
+  void postaoao() async{
+    var files = {
+      'file': ('Congrats! You have uploaded your file to IPFS!'),
+    };
+
+    http.MultipartRequest request = new http.MultipartRequest("POST", Uri.parse('https://ipfs.infura.io:5001/api/v0/add'));
+    // var request =  http.post();
+    http.MultipartFile multipartFile = await http.MultipartFile.fromString("files", "hello");
+    request.files.add(multipartFile);
+    http.StreamedResponse response = await request.send();
+
+    // var p = jsonDecresponse);
+
+    // var hash = p['Hash'];
+    print(response);
+    print(response.statusCode);
+    final respStr = await response.stream.bytesToString();
+    print(respStr);
+  }
+
   void performUserRegistered() {
     setState(() {
       userRegistered = true;
@@ -88,9 +112,10 @@ class _HomeState extends State<Home> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        child: Text('VaccinationStatus'),
+                        child: Text('push IPFS'),
                         onPressed: () => {
-                          Navigator.pushNamed(context, '/vaccinationStatus')
+                          // Navigator.pushNamed(context, '/vaccinationStatus');
+                          postaoao()
                         },
                       ),
                     ),
