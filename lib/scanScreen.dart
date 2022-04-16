@@ -151,7 +151,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                             "The provided information is not found \n to be approved by any known authority"),
-                      ])),
+                      Text(qrCodeResult.toString())
+                        ])),
             Align(
                 alignment: Alignment.bottomRight,
                 child: ElevatedButton(
