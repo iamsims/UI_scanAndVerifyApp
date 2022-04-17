@@ -39,20 +39,35 @@ class _HomePageState extends State<HomePage> {
 
     final res = json.decode(object);
     Map info = {};
-    for (String key in res.keys) {
-      String signature = res[key][0];
-      String msg = res[key][1];
+    print("hi");
 
-      Uint8List msghash = getPersonalMessage(toBuffer(msg));
 
-      String address =
-          EthSigUtil.ecRecover(signature: signature, message: msghash);
+    try {
+      for (String key in res.keys) {
+        String signature = res[key][0];
+        String msg = res[key][1];
+        print("hi1");
 
-      print(address.toUpperCase());
-      if (address.toUpperCase() ==
-          "0X3B9048522B3C91F213e3Aa98454502e545AD7f3B".toUpperCase()) {
-        info[key] = msg;
+        Uint8List msghash = getPersonalMessage(toBuffer(msg));
+
+        print(msghash.toString());
+        print("signature");
+        print(signature.toString());
+
+        String address =
+        EthSigUtil.ecRecover(signature: signature, message: msghash);
+        print("hi2");
+
+        print(address.toUpperCase());
+        if (address.toUpperCase() ==
+            "0X3B9048522B3C91F213e3Aa98454502e545AD7f3B".toUpperCase()) {
+          info[key] = msg;
+        }
       }
+    }
+
+    catch(e){
+
     }
     print(info);
     return info;
@@ -65,113 +80,113 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return !scanned
         ? Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: Stack(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(50),
-                        color: Colors.white,
-                      ),
-                      Center(
-                        child: Icon(Icons.document_scanner_outlined, size: 60),
-                      ),
-                    ],
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  Container(
+                    margin: EdgeInsets.all(50),
+                    color: Colors.white,
                   ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                ElevatedButton(
-                  child: Text("Scan QR"),
-                  style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(50, 100),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 30),
-                      textStyle: const TextStyle(
-                        fontSize: 24,
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50))),
-                  onPressed: () async {
-                    scanButtonClicked = true;
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => ResultScreen("jpt try", true)),
-                    // );
+                  Center(
+                    child: Icon(Icons.document_scanner_outlined, size: 60),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            ElevatedButton(
+              child: Text("Scan QR"),
+              style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(50, 100),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10, horizontal: 30),
+                  textStyle: const TextStyle(
+                    fontSize: 24,
+                  ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50))),
+              onPressed: () async {
+                scanButtonClicked = true;
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => ResultScreen("jpt try", true)),
+                // );
 
-                    String barcodeScanRes =
-                        await FlutterBarcodeScanner.scanBarcode(
-                            "Red", "Cancel", true, ScanMode.QR);
-                    setState(() {
-                      print("BArcode result");
-                      print("hi"+barcodeScanRes);
-                      if (barcodeScanRes != "-1") {
-                        scanned = true;
-                        qrCodeResult = verifySignature(barcodeScanRes);
-                        if (qrCodeResult.isEmpty){
-                          approved = false;
-                        }
-                        else approved = true;
-                      }
-                      else {
-                        scanButtonClicked = false;
-                      }
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 15,
-                )
-              ],
-            ))
+                String barcodeScanRes =
+                await FlutterBarcodeScanner.scanBarcode(
+                    "Red", "Cancel", true, ScanMode.QR);
+                setState(() {
+                  print("BArcode result");
+                  print("hi"+barcodeScanRes);
+                  if (barcodeScanRes != "-1") {
+                    scanned = true;
+                    qrCodeResult = verifySignature(barcodeScanRes);
+                    if (qrCodeResult.isEmpty){
+                      approved = false;
+                    }
+                    else approved = true;
+                  }
+                  else {
+                    scanButtonClicked = false;
+                  }
+                });
+              },
+            ),
+            SizedBox(
+              height: 15,
+            )
+          ],
+        ))
         : Stack(children: [
-            approved
-                ? Container(
-                    padding: EdgeInsets.all(10),
-                    child: SingleChildScrollView(
-                      child: Column(children: [
-                        ProfileHeader(
-                          avatar: AssetImage("assets/profile_page.jpg"),
-                        ),
-                        UserInfo(qrCodeResult),
-                      ]),
-                    ))
-                : Center(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                        FaIcon(
-                          FontAwesomeIcons.exclamation,
-                          size: 80,
-                        ),
-                        Text(
-                            "The provided information is not found \n to be approved by any known authority"),
-                      Text(qrCodeResult.toString())
-                        ])),
-            Align(
-                alignment: Alignment.bottomRight,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(10),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50)),
-                    textStyle: const TextStyle(
-                      fontSize: 36,
-                    ),
-                  ),
-                  child: Icon(Icons.home),
-                  onPressed: () {
-                    setState(() {
-                      scanned = false;
-                    });
-                  },
-                ))
-          ]);
+      approved
+          ? Container(
+          padding: EdgeInsets.all(10),
+          child: SingleChildScrollView(
+            child: Column(children: [
+              ProfileHeader(
+                avatar: AssetImage("assets/profile_page.jpg"),
+              ),
+              UserInfo(qrCodeResult),
+            ]),
+          ))
+          : Center(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FaIcon(
+                  FontAwesomeIcons.exclamation,
+                  size: 80,
+                ),
+                Text(
+                    "The provided information is not found \n to be approved by any known authority"),
+                Text(qrCodeResult.toString())
+              ])),
+      Align(
+          alignment: Alignment.bottomRight,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.all(10),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50)),
+              textStyle: const TextStyle(
+                fontSize: 36,
+              ),
+            ),
+            child: Icon(Icons.home),
+            onPressed: () {
+              setState(() {
+                scanned = false;
+              });
+            },
+          ))
+    ]);
   }
 // Uint8List keccak256(Uint8List uint8list) {}
 }
@@ -274,30 +289,30 @@ class UserInfo extends StatelessWidget {
                   Column(
                     children: <Widget>[
                       ...ListTile.divideTiles(color: Colors.grey, tiles:
-                          getTiles().toList(),
-                      //     [
-                      //   ListTile(
-                      //     contentPadding:
-                      //         EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                      //     // leading: Icon(Icons.my_location),
-                      //     title: Text("Name"),
-                      //     subtitle: Text("Simran KC"),
-                      //   ),
-                      //   ListTile(
-                      //     contentPadding:
-                      //         EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                      //     // leading: Icon(Icons.my_location),
-                      //     title: Text("Location"),
-                      //     subtitle: Text("Kathmandu"),
-                      //   ),
-                      //   ListTile(
-                      //     contentPadding:
-                      //         EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                      //     // leading: Icon(Icons.my_location),
-                      //     title: Text("Citizenship Number"),
-                      //     subtitle: Text("12345"),
-                      //   )
-                      // ]
+                      getTiles().toList(),
+                        //     [
+                        //   ListTile(
+                        //     contentPadding:
+                        //         EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        //     // leading: Icon(Icons.my_location),
+                        //     title: Text("Name"),
+                        //     subtitle: Text("Simran KC"),
+                        //   ),
+                        //   ListTile(
+                        //     contentPadding:
+                        //         EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        //     // leading: Icon(Icons.my_location),
+                        //     title: Text("Location"),
+                        //     subtitle: Text("Kathmandu"),
+                        //   ),
+                        //   ListTile(
+                        //     contentPadding:
+                        //         EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        //     // leading: Icon(Icons.my_location),
+                        //     title: Text("Citizenship Number"),
+                        //     subtitle: Text("12345"),
+                        //   )
+                        // ]
                       ),
                     ],
                   )
